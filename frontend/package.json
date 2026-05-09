@@ -13,8 +13,9 @@
         "web-vitals": "^1.1.1"
     },
     "scripts": {
-        "start": "react-scripts start",
+        "start": "node scripts/patch-react-scripts-sourcemaps.js && react-scripts start",
         "build": "react-scripts build",
+        "postinstall": "node scripts/patch-react-scripts-sourcemaps.js",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
