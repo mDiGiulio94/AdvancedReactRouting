@@ -1,29 +1,37 @@
-import { useRouteLoaderData } from "react-router-dom";
-import EventItem from '../components/EventItem';
+import { redirect, useRouteLoaderData } from "react-router-dom";
+import EventItem from "../components/EventItem";
 
 export default function EventDetail() {
-const data = useRouteLoaderData('event-detail');
+  const data = useRouteLoaderData("event-detail");
   return (
     <>
-     <EventItem event={data.event} />
+      <EventItem event={data.event} />
     </>
   );
 }
 
-
 export async function eventDetailLoader({ request, params }) {
-
   const id = params.id;
 
   const response = await fetch(`http://localhost:8080/events/${id}`);
 
   if (!response.ok) {
-    throw Response.json(
-      { message: "Could not fetch event." },
-      { status: 500 }
-    );
+    throw Response.json({ message: "Could not fetch event." }, { status: 500 });
   } else {
     return response;
   }
+}
 
+export async function deleteItem({ request, params }) {
+  const id = params.id;
+
+  const response = await fetch(`http://localhost:8080/events/${id}`, {
+    method: request.method,
+  });
+
+  if (!response.ok) {
+    throw Response.json({ message: "Could not fetch event." }, { status: 500 });
+  } else {
+    return redirect('/events');
+  }
 }

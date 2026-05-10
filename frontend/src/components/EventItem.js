@@ -1,10 +1,18 @@
-import { Link } from 'react-router-dom';
+import { Link, useSubmit } from 'react-router-dom';
 
 import classes from './EventItem.module.css';
 
 function EventItem({ event }) {
-  function startDeleteHandler() {
-    // ...
+
+  const submit = useSubmit();
+
+  const startDeleteHandler = () => {
+   const proceed = window.confirm('Are you sure?');
+
+   if(proceed){
+    // con questo hook di react-router-dom, i dati recuperati verranno automaticamente wrappati come formData object, generalmente i dati potrebbero essere estratti utilizzando il get, come nella post, ma siccome in questo caso non ci sono dati da estrarre viene settato a null
+      submit(null, { method: 'delete'}, )
+   }
   }
 
   return (
