@@ -6,7 +6,7 @@ import EventDetailPage, {
   eventDetailLoader,
   deleteEventAction,
 } from './pages/EventDetail';
-import EventsPage, { eventsLoader } from './pages/Events';
+import EventsPage, { loader as eventsLoader } from './pages/Events';
 import EventsRootLayout from './pages/EventsRootLayout';
 import HomePage from './pages/Home';
 import NewEventPage from './pages/NewEvent';
