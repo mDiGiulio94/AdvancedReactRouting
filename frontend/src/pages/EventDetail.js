@@ -22,7 +22,7 @@ export async function eventDetailLoader({ request, params }) {
   }
 }
 
-export async function deleteItem({ request, params }) {
+export async function deleteEventAction({ request, params }) {
   const id = params.id;
 
   const response = await fetch(`http://localhost:8080/events/${id}`, {

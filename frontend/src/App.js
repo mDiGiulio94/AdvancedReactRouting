@@ -1,46 +1,62 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-import RootLayout from "./pages/RootLayout";
-import EventsRootLayout from "./pages/EventsRootLayout";
-import Home from "./pages/Home";
-import Events, { eventLoader } from "./pages/Events";
-import EventDetail, { deleteItem, eventDetailLoader } from "./pages/EventDetail";
-import NewEvent, { actionNewEvent } from "./pages/NewEvent";
-import EditEvent from "./pages/EditEvent";
-import ErrorPage from "./pages/Error";
+import EditEventPage from './pages/EditEvent';
+import ErrorPage from './pages/Error';
+import EventDetailPage, {
+  eventDetailLoader,
+  deleteEventAction,
+} from './pages/EventDetail';
+import EventsPage, { eventsLoader } from './pages/Events';
+import EventsRootLayout from './pages/EventsRootLayout';
+import HomePage from './pages/Home';
+import NewEventPage from './pages/NewEvent';
+import RootLayout from './pages/RootLayout';
+import { manipulateEventAction } from './components/EventForm';
+import NewsletterPage from './pages/Newsletter';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <Home /> },
+      { index: true, element: <HomePage /> },
       {
-        path: "events",
+        path: 'events',
         element: <EventsRootLayout />,
         children: [
-          // loader richiede una funzione, che verrà eseguita da react router ogni volta che si tenterà di accedere a quel componente
           {
             index: true,
-            element: <Events />,
-            loader: eventLoader,
+            element: <EventsPage />,
+            loader: eventsLoader,
           },
           {
-            path: ":id",
-            id: "event-detail",
+            path: ':id',
+            id: 'event-detail',
             loader: eventDetailLoader,
             children: [
               {
                 index: true,
-                element: <EventDetail />,
-                action: deleteItem,
+                element: <EventDetailPage />,
+                action: deleteEventAction,
               },
-              { path: "edit", element: <EditEvent /> },
+              {
+                path: 'edit',
+                element: <EditEventPage />,
+                action: manipulateEventAction,
+              },
             ],
           },
-          { path: "new", element: <NewEvent />, action: actionNewEvent },
+          {
+            path: 'new',
+            element: <NewEventPage />,
+            action: manipulateEventAction,
+          },
         ],
+      },
+      {
+        path: 'newsletter',
+        element: <NewsletterPage />,
       },
     ],
   },
@@ -51,3 +67,5 @@ function App() {
 }
 
 export default App;
+
+     // loader richiede una funzione, che verrà eseguita da react router ogni volta che si tenterà di accedere a quel componente

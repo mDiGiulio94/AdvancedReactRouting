@@ -17,7 +17,7 @@ function EventsPage() {
 export default EventsPage;
 
 // questa funzione può essere dichiarata sia in app.js, sia nel componente di appartenenza, exportata, ed utilizzata in app, questo per avere un componente più pulito.
-export async function eventLoader() {
+export async function eventsLoader() {
   const response = await fetch("http://localhost:8080/events");
 
   if (!response.ok) {
