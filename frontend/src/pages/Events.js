@@ -1,4 +1,4 @@
-import { useLoaderData, defer, Await } from "react-router-dom";
+import { useLoaderData, Await } from "react-router-dom";
 import EventsList from "../components/EventsList";
 import { Suspense } from "react";
 
@@ -12,9 +12,8 @@ function EventsPage() {
 
   return (
     <>
-   {/* suspense viene utilizzato per visualizzare una schermata di fall back quando dei dati non sono ancrora caricati */}
-    <Suspense >
-       {/* con defer viene usato questo componente specifico di react-router-dom */}
+   {/* Suspense mostra un fallback mentre Await risolve la Promise del loader. */}
+    <Suspense fallback={<p style={{ textAlign: "center" }}>Loading...</p>}>
       <Await resolve={events}>
         {(loadedEvents) => <EventsList events={loadedEvents} />}
         </Await>
@@ -51,18 +50,18 @@ async function loadEvents() {
   }
 }
 
-// defer viene viene utilizzato in versioni passate di react-router-dom precedenti alla 7
 export function loader () {
-  // defer contiene un oggetto che tiene le request http, dopo di che si va al componente dove viene usato 
-  return defer({
+  return {
     events: loadEvents()
-  })
+  }
 }
 
-// nelle versioni moderne il defer non viene più utilizzato, il loader può essere scrutti durettanebte come segue:
-
-// export async function loader() {
-//   return {
+// Versione per React Router DOM con supporto a defer.
+// In quelle versioni aggiungi anche defer all'import:
+// import { useLoaderData, defer, Await } from "react-router-dom";
+//
+// export function loader() {
+//   return defer({
 //     events: loadEvents(),
-//   };
+//   });
 // }
